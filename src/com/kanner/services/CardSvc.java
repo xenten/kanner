@@ -25,8 +25,8 @@ public class CardSvc {
 	PersistenceManager pm = PMF.get().getPersistenceManager();
 
 	@PUT
-	@Produces(MediaType.APPLICATION_XML)
-	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_XML)
+	@Consumes(MediaType.TEXT_XML)
 	public String putCardXml(Card card) throws ParseException {
 		
 		pm = PMF.get().getPersistenceManager();
@@ -66,7 +66,7 @@ public class CardSvc {
 	
 	@GET
 	@Path("{id}")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Card findById(@PathParam("id") String id) {
 		
 		pm = PMF.get().getPersistenceManager();
@@ -79,7 +79,7 @@ public class CardSvc {
 	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/list")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Card> list() {
 		
 		List<Card> results = null;
@@ -100,7 +100,7 @@ public class CardSvc {
 	
 	@DELETE
 	@Path("{id}")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public void delete(@PathParam("id") String id) {
 		
 		Card c = pm.getObjectById(Card.class, Long.parseLong(id));
