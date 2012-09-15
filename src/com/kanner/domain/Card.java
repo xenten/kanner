@@ -12,8 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Card {
 	
 	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.UUIDSTRING)
-	private String id;
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	private Long id;
 	
 	@Persistent
 	private int version;
@@ -77,11 +77,11 @@ public class Card {
 		this.owner = owner;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
