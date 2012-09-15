@@ -7,15 +7,13 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.google.appengine.api.datastore.Key;
-
 @XmlRootElement
 @PersistenceCapable
 public class Card {
 	
 	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key id;
+	@Persistent(valueStrategy = IdGeneratorStrategy.UUIDSTRING)
+	private String id;
 	
 	@Persistent
 	private int version;
@@ -31,6 +29,13 @@ public class Card {
 	
 	@Persistent
 	private String owner;
+	
+	@Persistent
+	private String requestedReleaseDate;
+	
+	@Persistent
+	private String requirements;
+	
 
 	public int getVersion() {
 		return version;
@@ -72,11 +77,11 @@ public class Card {
 		this.owner = owner;
 	}
 
-	public Long getId() {
-		return id.getId();
+	public String getId() {
+		return id;
 	}
 	
-	public void setId(Key id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -84,6 +89,22 @@ public class Card {
 		
 		this.version = Integer.parseInt(version);
 		
+	}
+
+	public String getRequestedReleaseDate() {
+		return requestedReleaseDate;
+	}
+
+	public void setRequestedReleaseDate(String requestedReleaseDate) {
+		this.requestedReleaseDate = requestedReleaseDate;
+	}
+
+	public String getRequirements() {
+		return requirements;
+	}
+
+	public void setRequirements(String requirements) {
+		this.requirements = requirements;
 	}	
 
 }
