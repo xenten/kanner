@@ -30,8 +30,8 @@ public class CardSvc {
 	private CardManager manager = new CardManagerJdo();
 	
 	@POST
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Card createNewCard(Card card) throws ParseException {
 		
 		Card createdCard = null;
