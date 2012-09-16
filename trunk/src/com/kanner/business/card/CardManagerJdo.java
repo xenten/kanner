@@ -12,7 +12,8 @@ public class CardManagerJdo implements CardManager {
 	
 	@Override
 	public Card create(Card card) {
-
+		
+		// Save the Card
 		try {
 			
 			pm.makePersistent(card);
@@ -21,6 +22,10 @@ public class CardManagerJdo implements CardManager {
 			
 			pm.close();
 		}
+		
+		// Send email confirmation
+		Email email = new Email();
+		
 		
 		return card;
 	}
