@@ -1,8 +1,11 @@
 package com.kanner.business.card;
 
+import java.util.Date;
+
 import javax.jdo.PersistenceManager;
 
 import com.kanner.domain.Card;
+import com.kanner.domain.Transaction;
 import com.kanner.factory.PMF;
 
 
@@ -13,19 +16,24 @@ public class CardManagerJdo implements CardManager {
 	@Override
 	public Card create(Card card) {
 		
+		// Create a transaction
+		Transaction cardTxn = new Transaction();
+		cardTxn.setType(card.getClass().getSimpleName());
+		cardTxn.setUser(card.getOwner());
+		cardTxn.setCompleted(false);
+		cardTxn.setDate(new Date());
+		
 		// Save the Card
 		try {
 			
 			pm.makePersistent(card);
+			cardT
+			+.+++++++++xn.setCompleted(true);
 			
 		} finally {
 			
 			pm.close();
 		}
-		
-		// Send email confirmation
-		Email email = new Email();
-		
 		
 		return card;
 	}
