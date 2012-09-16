@@ -18,10 +18,11 @@ public class EmailSvc {
 		
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
+		Message message = null;
 		
 		try {
 			
-			Message message = new MimeMessage(session);
+			message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("me@me.com", "ME"));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress("you@you.com", "YOU"));
 			
@@ -30,12 +31,14 @@ public class EmailSvc {
 			message.setText("This is the body of the text");
 			
 			Transport.send(message);
+			
 		} catch (Exception e) {
 			
 			System.out.println("Exception");
 			return "false";
 		}
 		
+		System.out.println(message.toString());
 		return "true";
 		
 	}
