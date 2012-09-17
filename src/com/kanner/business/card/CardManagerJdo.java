@@ -27,8 +27,8 @@ public class CardManagerJdo implements CardManager {
 		try {
 			
 			pm.makePersistent(card);
-			cardT
-			+.+++++++++xn.setCompleted(true);
+			cardTxn.setCompleted(true);
+			pm.makePersistent(cardTxn);
 			
 		} finally {
 			
