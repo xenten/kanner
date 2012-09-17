@@ -7,6 +7,7 @@ import javax.jdo.PersistenceManager;
 import com.kanner.domain.Card;
 import com.kanner.domain.Transaction;
 import com.kanner.factory.PMF;
+import com.kanner.services.EmailSvc;
 
 
 public class CardManagerJdo implements CardManager {
@@ -34,6 +35,10 @@ public class CardManagerJdo implements CardManager {
 			
 			pm.close();
 		}
+		
+		// Email Confirmation to Owner
+		EmailSvc emailSvc = new EmailSvc();
+		emailSvc.sendEmail();
 		
 		return card;
 	}
