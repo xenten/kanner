@@ -7,13 +7,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 
-@Path("/email")
 public class EmailSvc {
-	
-	@GET
+
 	public String sendEmail() {
 		
 		Properties props = new Properties();
@@ -42,5 +38,4 @@ public class EmailSvc {
 		return "true";
 		
 	}
-
 }
