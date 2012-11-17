@@ -1,11 +1,16 @@
 package com.kanner.domain;
 
 import java.text.ParseException;
+
+import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @XmlRootElement
 @PersistenceCapable
@@ -13,7 +18,7 @@ public class Card {
 	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Long id;
+	private Key id;
 	
 	@Persistent
 	private int version;
@@ -87,12 +92,12 @@ public class Card {
 		this.owner = owner;
 	}
 
-	public Long getId() {
+	public String getId() {
 		
-		return id;
+		return KeyFactory.keyToString(id);
 	}
 	
-	public void setId(Long id) {
+	public void setId(Key id) {
 		
 		this.id = id;
 	}

@@ -15,7 +15,7 @@
             </param-name>
 
             <param-value>
-				com.kanner.services
+				com.kanner.resources
             </param-value>
         </init-param>
 
