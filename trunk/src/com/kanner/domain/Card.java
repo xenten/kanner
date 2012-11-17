@@ -1,7 +1,7 @@
 package com.kanner.domain;
 
 import java.text.ParseException;
-
+import java.util.List;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -39,6 +39,18 @@ public class Card {
 	
 	@Persistent
 	private String requirements;
+	
+	@Persistent
+	private String developer;
+	
+	@Persistent
+	private String tester;
+	
+	@Persistent
+	private List<String> pastRequirements;
+	
+	@Persistent
+	private List<Card> pastCards;
 	
 
 	public int getVersion() {

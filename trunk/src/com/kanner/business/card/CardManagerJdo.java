@@ -1,18 +1,13 @@
 package com.kanner.business.card;
 
-import javax.jdo.PersistenceManager;
-
 import com.kanner.domain.Card;
 import com.kanner.domain.Queue;
-import com.kanner.factory.PMF;
 import com.kanner.services.CardSvc;
 import com.kanner.services.EmailSvc;
 import com.kanner.services.QueueSvc;
 
 
 public class CardManagerJdo implements CardManager {
-	
-	PersistenceManager pm = PMF.get().getPersistenceManager();
 	
 	@Override
 	public Card create(Card card) {
@@ -44,11 +39,6 @@ public class CardManagerJdo implements CardManager {
 		
 		return createdCard;
 	}
-
-	
-	
-	
-	
 	
 	@Override
 	public Card read(long id) {
