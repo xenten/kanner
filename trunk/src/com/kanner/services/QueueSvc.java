@@ -28,6 +28,18 @@ public class QueueSvc {
 		return createdQueue;
 	}
 	
+	public Queue update(Queue queue) {
+		
+		return create(queue);
+	}
+	
+	
+	
+	public Queue getQueueById(Long id) {
+		
+		return pm.getObjectById(Queue.class, id);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Queue getQueueByOwner(String owner) {
 		
