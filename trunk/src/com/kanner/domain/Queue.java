@@ -1,6 +1,6 @@
 package com.kanner.domain;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -20,7 +20,7 @@ public class Queue {
 	private String owner;
 	
 	@Persistent
-	private ArrayList<Card> cardList;
+	private List<Card> cardList;
 
 	public Long getId() {
 		return id;
@@ -30,11 +30,11 @@ public class Queue {
 		this.id = id;
 	}
 
-	public ArrayList<Card> getCardList() {
+	public List<Card> getCardList() {
 		return cardList;
 	}
 
-	public void setCardList(ArrayList<Card> cardList) {
+	public void setCardList(List<Card> cardList) {
 		this.cardList = cardList;
 	}
 

@@ -1,5 +1,7 @@
 package com.kanner.services;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
@@ -26,8 +28,10 @@ public class QueueSvc {
 		return createdQueue;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Queue getQueueByOwner(String owner) {
 		
+		List<Queue> queueList = null;
 		Queue queue = null;
 		Query query = pm.newQuery(Queue.class);
 		query.setFilter("owner == ownerParam");
@@ -36,7 +40,12 @@ public class QueueSvc {
 		
 		try {
 			
-			queue = (Queue) query.execute(owner);
+			queueList =  (List<Queue>) query.execute(owner);
+			
+			if (!queueList.isEmpty()) {
+				
+				queue = queueList.get(0);
+			}
 			
 		} finally {
 			
