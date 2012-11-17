@@ -2,7 +2,6 @@ package com.kanner.domain;
 
 import java.text.ParseException;
 
-import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
