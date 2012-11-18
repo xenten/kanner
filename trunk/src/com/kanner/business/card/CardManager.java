@@ -1,11 +1,14 @@
 package com.kanner.business.card;
 
+import java.util.List;
+
 import com.kanner.domain.Card;
 
 public interface CardManager {
 
 	public Card create(Card card);
-	public Card read(long id);
+	public Card read(String id);
 	public Card update(Card card);
 	public Card delete(Card card);
+	public List<Card> list();
 }

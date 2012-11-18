@@ -1,11 +1,26 @@
 package com.kanner.business.queue;
 
+import java.util.List;
+
 import com.kanner.domain.Card;
 import com.kanner.domain.Queue;
+import com.kanner.services.CardSvc;
 import com.kanner.services.QueueSvc;
 
 public class QueueManagerJdo {
- 
+	
+	public List<Card> list() {
+		
+		QueueSvc queueSvc = new QueueSvc();
+		return null;
+	}
+	
+	public Queue queueByOwner(String owner) {
+		
+		QueueSvc queueSvc = new QueueSvc();
+		
+		return queueSvc.getQueueByOwner(owner);
+	}
 	public Queue move(String currentOwner, Card card, String newOwner) {
 		
 		QueueSvc queueSvc = new QueueSvc();

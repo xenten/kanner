@@ -1,5 +1,9 @@
 package com.kanner.business.card;
 
+import java.util.List;
+
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.kanner.domain.Card;
 import com.kanner.domain.Queue;
 import com.kanner.services.CardSvc;
@@ -40,10 +44,16 @@ public class CardManagerJdo implements CardManager {
 		return createdCard;
 	}
 	
-	@Override
-	public Card read(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Card read(String id) {
+		
+		CardSvc cardSvc = new CardSvc();
+		return cardSvc.findById(id);
+	}
+	
+	public List<Card> list() {
+		
+		CardSvc cardSvc = new CardSvc();
+		return cardSvc.list();
 	}
 
 	@Override
