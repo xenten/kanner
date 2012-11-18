@@ -7,7 +7,7 @@ import com.kanner.domain.Queue;
 @Path("/queue")
 public class QueueResource {
 	
-	@Path("/move/{currentOwner}/{card}/{newOwner}")
+	@Path("/owner/{owner}")
 	public Queue moveCardToQueue() {
 		
 		return null;
