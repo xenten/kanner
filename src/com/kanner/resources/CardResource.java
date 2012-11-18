@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 import com.kanner.business.card.CardManager;
@@ -23,7 +24,7 @@ public class CardResource {
 	@POST
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Card createNewCard(Card card) throws ParseException {
+	public Card createNewCard(Card card) {
 		
 		Card createdCard = null;
 		
@@ -33,6 +34,10 @@ public class CardResource {
 		
 		log.info("Leaving createNewCard...");
 		
+		if (createdCard == null) {
+			
+			throw new WebApplicationException(400);
+		}
 		return createdCard;
 	}
 }
