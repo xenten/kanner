@@ -1,5 +1,6 @@
 package com.kanner.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -31,6 +32,12 @@ public class Queue {
 	}
 
 	public List<Card> getCardList() {
+		
+		if (cardList == null) {
+			
+			cardList = new ArrayList<Card>();
+		}
+		
 		return cardList;
 	}
 

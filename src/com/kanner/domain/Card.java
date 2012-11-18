@@ -1,7 +1,6 @@
 package com.kanner.domain;
 
 import java.text.ParseException;
-import java.util.List;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -17,7 +16,10 @@ public class Card {
 	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key id;
+	private Key key;
+	
+	@Persistent
+	private String id;
 	
 	@Persistent
 	private int version;
@@ -44,14 +46,7 @@ public class Card {
 	private String developer;
 	
 	@Persistent
-	private String tester;
-	
-	@Persistent
-	private List<String> pastRequirements;
-	
-	@Persistent
-	private List<Card> pastCards;
-	
+	private String tester;	
 
 	public int getVersion() {
 		
@@ -105,10 +100,20 @@ public class Card {
 
 	public String getId() {
 		
-		return KeyFactory.keyToString(id);
+		String idKey;
+		
+		if (key != null) {
+			
+			idKey = KeyFactory.keyToString(key);
+		} else {
+			
+			idKey = id;
+		}
+		
+		return idKey;
 	}
 	
-	public void setId(Key id) {
+	public void setId(String id) {
 		
 		this.id = id;
 	}
