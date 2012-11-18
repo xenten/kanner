@@ -9,10 +9,10 @@ import com.kanner.services.QueueSvc;
 
 public class QueueManagerJdo {
 	
-	public List<Card> list() {
+	public List<Queue> list() {
 		
 		QueueSvc queueSvc = new QueueSvc();
-		return null;
+		return queueSvc.list();
 	}
 	
 	public Queue queueByOwner(String owner) {
@@ -21,6 +21,7 @@ public class QueueManagerJdo {
 		
 		return queueSvc.getQueueByOwner(owner);
 	}
+	
 	public Queue move(String currentOwner, Card card, String newOwner) {
 		
 		QueueSvc queueSvc = new QueueSvc();

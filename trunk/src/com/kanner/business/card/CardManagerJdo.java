@@ -2,8 +2,8 @@ package com.kanner.business.card;
 
 import java.util.List;
 
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
+import javax.ws.rs.WebApplicationException;
+
 import com.kanner.domain.Card;
 import com.kanner.domain.Queue;
 import com.kanner.services.CardSvc;
@@ -20,22 +20,30 @@ public class CardManagerJdo implements CardManager {
 		CardSvc cardSvc = new CardSvc();
 		Card createdCard = cardSvc.create(card);
 		
+		if (createdCard == null) {
+			
+			throw new WebApplicationException(400);
+		}
+		
 		// Get the available queue
 		QueueSvc queueSvc = new QueueSvc();
-		Queue availableQueue = queueSvc.getQueueByOwner("Available");
+		Queue queue = queueSvc.getQueueByOwner("Available");
 		
 		// If the queue doesn't exist then create it 
-		if (availableQueue == null) {
+		if (queue == null) {
 			
-			Queue queue = new Queue();
+			queue = new Queue();
 			queue.setOwner("Available");
-			
-			availableQueue = queueSvc.create(queue);
 			
 		}
 		
+		System.out.println("Queue Owner = " + queue.getOwner());
+		System.out.println("Card Key    = " + createdCard.getId());
+		
 		// Add the card to the list of cards in the queue
-		availableQueue.getCardList().add(createdCard);
+		queue.getCardList().add(createdCard);
+		
+		queueSvc.create(queue);
 		
 		// Email Confirmation to Owner
 		EmailSvc emailSvc = new EmailSvc();

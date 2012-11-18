@@ -47,7 +47,7 @@ public class QueueSvc {
 		Queue queue = null;
 		Query query = pm.newQuery(Queue.class);
 		query.setFilter("owner == ownerParam");
-		query.setRange(0, 0);
+		query.setRange(0, 1);
 		query.declareParameters("String ownerParam");
 		
 		try {
@@ -55,6 +55,8 @@ public class QueueSvc {
 			queueList =  (List<Queue>) query.execute(owner);
 			
 			if (!queueList.isEmpty()) {
+				
+				System.out.println("Queue List is not empty");
 				
 				queue = queueList.get(0);
 			}
@@ -65,5 +67,24 @@ public class QueueSvc {
 		}
 		
 		return queue;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Queue> list() {
+	
+		List<Queue> results = null;
+		Query q = pm.newQuery(Queue.class);
+		q.setOrdering("id desc");
+		
+		try {
+			
+			results = (List<Queue>) q.execute();
+			
+		} finally {
+			
+			q.closeAll();
+		}
+		
+		return results;
 	}
 }

@@ -36,12 +36,9 @@ public class CardResource {
 		
 		createdCard = manager.create(card);
 		
-		log.info("Leaving createNewCard...");
+		System.out.println("createdCard = " + createdCard.getId());
 		
-		if (createdCard == null) {
-			
-			throw new WebApplicationException(400);
-		}
+		log.info("Leaving createNewCard...");
 		
 		return createdCard;
 	}
