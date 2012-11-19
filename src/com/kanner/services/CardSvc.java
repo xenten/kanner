@@ -1,24 +1,26 @@
 package com.kanner.services;
 
+import java.text.ParseException;
 import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.core.MediaType;
-
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.kanner.domain.Card;
 import com.kanner.factory.PMF;
 
+/**
+ * 
+ * @author dougk_000
+ *
+ */
 public class CardSvc {
 	
 	private PersistenceManager pm = PMF.get().getPersistenceManager();
 	
+	/**
+	 * 
+	 * @param card
+	 * @return
+	 */
 	public Card create(Card card) {
 		
 		Card createdCard = null;
@@ -28,6 +30,10 @@ public class CardSvc {
 			
 			createdCard = pm.makePersistent(card);
 			
+			createdCard.setId(createdCard.getId());
+			
+			createdCard = pm.makePersistent(createdCard);
+			
 		} finally {
 			
 			pm.close();
@@ -35,23 +41,74 @@ public class CardSvc {
 		
 		return createdCard;
 	}
-	
-	@GET
-	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Card findById(@PathParam("id") String id) {
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Card findById(String id) {
 		
 		pm = PMF.get().getPersistenceManager();
 		
-		Key k = KeyFactory.createKey(Card.class.getSimpleName(), Long.parseLong(id));
-		
-		return pm.getObjectById(Card.class, k);
+		return pm.getObjectById(Card.class, id);
 	}
 	
+	/**
+	 * 
+	 * @param card
+	 * @return
+	 */
+	public boolean update(Card card) {
+
+		boolean updated = false;
+		
+		// Get the card already stored in the datastore
+		Card currentCard = findById(card.getId());
+		System.out.println("currentCard ID = " + currentCard.getId());
+		
+		if (currentCard.equals(card)) {
+			
+			System.out.println("The currentCard and the passed in card are equal");
+			updated = true;
+			
+		} else {
+			
+			card.setKey(currentCard.getKey());
+			
+			System.out.println("I'm actually updating the card.");
+			
+			try {
+				
+				pm.makePersistent(card);
+				updated = true;
+				
+			} finally {
+				
+				pm.close();
+			}
+		}
+		
+		return updated;
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 */
+	public void delete(String id) {
+		
+		Card c = pm.getObjectById(Card.class, id);
+		
+		pm.deletePersistent(c);
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
-	@GET
-	@Path("/list")
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Card> list() {
 		
 		List<Card> results = null;
@@ -69,15 +126,4 @@ public class CardSvc {
 		
 		return results;
 	}
-	
-	@DELETE
-	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void delete(@PathParam("id") String id) {
-		
-		Card c = pm.getObjectById(Card.class, Long.parseLong(id));
-		
-		pm.deletePersistent(c);
-	}
-
 }
