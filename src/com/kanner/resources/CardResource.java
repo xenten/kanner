@@ -3,6 +3,7 @@ package com.kanner.resources;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.jdo.PersistenceManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +15,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 import com.kanner.domain.Card;
+import com.kanner.factory.PMF;
 import com.kanner.services.CardSvc;
 
 @Path("/card")
@@ -21,6 +23,7 @@ public class CardResource {
 		
 	private static final Logger log = Logger.getLogger(CardSvc.class.getName());
 	private CardSvc cardSvc = new CardSvc();
+	private PersistenceManager pm = PMF.get().getPersistenceManager();
 	
 	@POST
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -31,21 +34,18 @@ public class CardResource {
 		
 		log.info("Entering createNewCard...");
 		
-		if (card.getId() != null) {
-			
-			throw new WebApplicationException(400);
-		}
-		
-		createdCard = cardSvc.create(card);
+		createdCard = cardSvc.create(card, pm);
 		
 		System.out.println("createdCard = " + createdCard.getId());
 		
-		if (createdCard.getId() == null) {
+		if (createdCard.getKey() == null) {
 			
 			throw new WebApplicationException(400);
 		}
 		
 		log.info("Leaving createNewCard...");
+		
+		pm.close();
 		
 		return createdCard.getId();
 	}
@@ -64,10 +64,12 @@ public class CardResource {
 			throw new WebApplicationException(400);
 		}
 		
-		cardUpdated = cardSvc.update(card);
+		cardUpdated = cardSvc.update(card, pm);
 		
 		System.out.println("cardUpdated = " + cardUpdated);
 		System.out.println("Exiting update...");
+		
+		pm.close();
 		
 		return cardUpdated.toString();
 	}
@@ -80,12 +82,14 @@ public class CardResource {
 		
 		List<Card> returnedCards = null;
 		
-		returnedCards = cardSvc.list();
+		returnedCards = cardSvc.list(pm);
 		
 		if (returnedCards == null) {
 			
 			throw new WebApplicationException(400);
 		}
+		
+		pm.close();
 		
 		return returnedCards;
 	}
@@ -97,7 +101,9 @@ public class CardResource {
 		
 		Card returnedCard = null;
 		
-		returnedCard = cardSvc.findById(id);
+		returnedCard = cardSvc.findById(id, pm);
+		
+		pm.close();
 		
 		return returnedCard;
 	}
