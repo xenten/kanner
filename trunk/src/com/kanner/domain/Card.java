@@ -141,6 +141,15 @@ public class Card {
 	public void setRequirements(String requirements) {
 		
 		this.requirements = requirements;
-	}	
-
+	}
+	
+	public Key getKey() {
+		
+		return key;
+	}
+	
+	public void setKey(Key key) {
+		
+		this.key = key;
+	}
 }

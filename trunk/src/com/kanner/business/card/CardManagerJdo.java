@@ -10,7 +10,7 @@ import com.kanner.services.CardSvc;
 import com.kanner.services.EmailSvc;
 import com.kanner.services.QueueSvc;
 
-
+@Deprecated
 public class CardManagerJdo implements CardManager {
 	
 	@Override

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kanner.domain.Card;
 
+@Deprecated
 public interface CardManager {
 
 	public Card create(Card card);

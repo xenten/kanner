@@ -12,7 +12,12 @@ public class QueueSvc {
 
 	private PersistenceManager pm = PMF.get().getPersistenceManager();
 	
-	public Queue create(Queue queue) {
+	/**
+	 * 
+	 * @param queue
+	 * @return
+	 */
+	public Long create(Queue queue) {
 		
 		Queue createdQueue = null;
 		
@@ -25,12 +30,37 @@ public class QueueSvc {
 			pm.close();
 		}
 		
-		return createdQueue;
+		return createdQueue.getId();
 	}
 	
-	public Queue update(Queue queue) {
+	/**
+	 * 
+	 * @param queue
+	 * @return
+	 */
+	public String update(Queue queue) {
 		
-		return create(queue);
+		Boolean updated = false;
+		Queue currentQueue = getQueueById(queue.getId());
+		
+		if (queue.equals(currentQueue)) {
+			
+			updated = true;
+			
+		} else {
+			
+			try {
+			
+				pm.makePersistent(queue);
+				updated = true;
+				
+			} finally {
+				
+				pm.close();
+			}
+		}
+		
+		return updated.toString(); 
 	}
 	
 	
