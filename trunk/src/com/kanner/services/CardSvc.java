@@ -1,6 +1,5 @@
 package com.kanner.services;
 
-import java.text.ParseException;
 import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -14,30 +13,22 @@ import com.kanner.factory.PMF;
  */
 public class CardSvc {
 	
-	private PersistenceManager pm = PMF.get().getPersistenceManager();
-	
 	/**
 	 * 
 	 * @param card
 	 * @return
 	 */
-	public Card create(Card card) {
+	public Card create(Card card, PersistenceManager pm) {
 		
 		Card createdCard = null;
+			
+		createdCard = pm.makePersistent(card);
 		
-		// Save the Card
-		try {
-			
-			createdCard = pm.makePersistent(card);
-			
-			createdCard.setId(createdCard.getId());
-			
-			createdCard = pm.makePersistent(createdCard);
-			
-		} finally {
-			
-			pm.close();
-		}
+		// This is an odd thing to do...
+		// Necessary thought, as far as I can tell
+		createdCard.setId(createdCard.getId());
+		
+		createdCard = pm.makePersistent(createdCard);
 		
 		return createdCard;
 	}
@@ -47,7 +38,7 @@ public class CardSvc {
 	 * @param id
 	 * @return
 	 */
-	public Card findById(String id) {
+	public Card findById(String id, PersistenceManager pm) {
 		
 		pm = PMF.get().getPersistenceManager();
 		
@@ -59,12 +50,12 @@ public class CardSvc {
 	 * @param card
 	 * @return
 	 */
-	public boolean update(Card card) {
+	public boolean update(Card card, PersistenceManager pm) {
 
 		boolean updated = false;
 		
 		// Get the card already stored in the datastore
-		Card currentCard = findById(card.getId());
+		Card currentCard = findById(card.getId(), pm);
 		System.out.println("currentCard ID = " + currentCard.getId());
 		
 		if (currentCard.equals(card)) {
@@ -78,15 +69,8 @@ public class CardSvc {
 			
 			System.out.println("I'm actually updating the card.");
 			
-			try {
-				
-				pm.makePersistent(card);
-				updated = true;
-				
-			} finally {
-				
-				pm.close();
-			}
+			pm.makePersistent(card);
+			updated = true;
 		}
 		
 		return updated;
@@ -96,7 +80,7 @@ public class CardSvc {
 	 * 
 	 * @param id
 	 */
-	public void delete(String id) {
+	public void delete(String id, PersistenceManager pm) {
 		
 		Card c = pm.getObjectById(Card.class, id);
 		
@@ -109,7 +93,7 @@ public class CardSvc {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Card> list() {
+	public List<Card> list(PersistenceManager pm) {
 		
 		List<Card> results = null;
 		Query q = pm.newQuery(Card.class);
