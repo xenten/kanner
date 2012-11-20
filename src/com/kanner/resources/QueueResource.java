@@ -2,6 +2,7 @@ package com.kanner.resources;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -19,7 +20,9 @@ public class QueueResource {
 	private QueueSvc queueSvc = new QueueSvc();
 	
 	@POST
-	public Long create(Queue queue) {
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public String create(Queue queue) {
 		
 		return queueSvc.create(queue);
 	}
@@ -29,7 +32,7 @@ public class QueueResource {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Queue readByOwner(@PathParam("owner") String owner) {
 		
-		return queueSvc.getQueueByOwner(owner);
+		return queueSvc.getQueueByOwner(owner.toLowerCase());
 	}
 	
 	@PUT
@@ -39,7 +42,6 @@ public class QueueResource {
 	}
 	
 	@GET
-	@Path("/all")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Queue> list() {
 		

@@ -17,7 +17,7 @@ public class QueueSvc {
 	 * @param queue
 	 * @return
 	 */
-	public Long create(Queue queue) {
+	public String create(Queue queue) {
 		
 		Queue createdQueue = null;
 		
@@ -65,7 +65,7 @@ public class QueueSvc {
 	
 	
 	
-	public Queue getQueueById(Long id) {
+	public Queue getQueueById(String id) {
 		
 		return pm.getObjectById(Queue.class, id);
 	}
