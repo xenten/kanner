@@ -9,13 +9,19 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
 @XmlRootElement
 @PersistenceCapable
 public class Queue {
 	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Long id;
+	private Key key;
+	
+	@Persistent
+	private String id;
 	
 	@Persistent
 	private String owner;
@@ -23,11 +29,32 @@ public class Queue {
 	@Persistent
 	private List<Card> cardList;
 
-	public Long getId() {
-		return id;
+	public Key getName() {
+		return key;
 	}
 
-	public void setId(Long id) {
+	public void setName(Key key) {
+		this.key = key;
+	}
+	
+	public String getId() {
+		
+		String idKey;
+		
+		if (key != null) {
+			
+			idKey = KeyFactory.keyToString(key);
+			
+		} else {
+			
+			idKey = id;
+		}
+		
+		return idKey;
+	}
+	
+	public void setId(String id) {
+		
 		this.id = id;
 	}
 
