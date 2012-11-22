@@ -1,6 +1,5 @@
 package com.kanner.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -24,16 +23,25 @@ public class Queue {
 	private String id;
 	
 	@Persistent
-	private String owner;
+	private String name;
+	
+	@Persistent
+	private String descr;
 	
 	@Persistent
 	private List<Card> cardList;
+	
+	@Persistent
+	private List<Queue> pullQueues;
+	
+	@Persistent
+	private List<Queue> pushQueues;
 
-	public Key getName() {
+	public Key getKey() {
 		return key;
 	}
 
-	public void setName(Key key) {
+	public void setKey(Key key) {
 		this.key = key;
 	}
 	
@@ -60,11 +68,6 @@ public class Queue {
 
 	public List<Card> getCardList() {
 		
-		if (cardList == null) {
-			
-			cardList = new ArrayList<Card>();
-		}
-		
 		return cardList;
 	}
 
@@ -72,12 +75,35 @@ public class Queue {
 		this.cardList = cardList;
 	}
 
-	public String getOwner() {
-		return owner;
+	public String getName() {
+		return name;
 	}
 
-	public void setOwner(String owner) {
-		this.owner = owner;
+	public void setName(String owner) {
+		this.name = owner;
 	}
-	
+
+	public String getDescr() {
+		return descr;
+	}
+
+	public void setDescr(String descr) {
+		this.descr = descr;
+	}
+
+	public List<Queue> getPullQueues() {
+		return pullQueues;
+	}
+
+	public void setPullQueues(List<Queue> pullQueues) {
+		this.pullQueues = pullQueues;
+	}
+
+	public List<Queue> getPushQueues() {
+		return pushQueues;
+	}
+
+	public void setPushQueues(List<Queue> pushQueues) {
+		this.pushQueues = pushQueues;
+	}
 }
