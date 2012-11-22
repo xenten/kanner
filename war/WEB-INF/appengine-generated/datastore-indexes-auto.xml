@@ -1,4 +1,10 @@
-<!-- Indices written at Mon, 19 Nov 2012 21:11:22 MST -->
+<!-- Indices written at Wed, 21 Nov 2012 21:56:14 MST -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
+    <!-- Used 4 times in query history -->
+    <datastore-index kind="Card" ancestor="true" source="auto">
+        <property name="cardList_INTEGER_IDX" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

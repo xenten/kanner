@@ -24,15 +24,8 @@ public class QueueResource {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String create(Queue queue) {
 		
+		System.out.println("queue.name = " + queue.getName());
 		return queueSvc.create(queue);
-	}
-	
-	@GET
-	@Path("/owner/{owner}")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Queue readByOwner(@PathParam("owner") String owner) {
-		
-		return queueSvc.getQueueByOwner(owner.toLowerCase());
 	}
 	
 	@PUT
@@ -44,7 +37,16 @@ public class QueueResource {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Queue> list() {
-		
+		//
 		return queueSvc.list();
+
+	}
+	
+	@GET
+	@Path("/owner/{owner}")
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public Queue readByOwner(@PathParam("owner") String owner) {
+		
+		return queueSvc.getQueueByOwner(owner.toLowerCase());
 	}
 }
