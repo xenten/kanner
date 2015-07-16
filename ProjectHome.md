@@ -1,0 +1,1 @@
+Master's project focusing on SOA architecture and the Kanban methodology.  Services written in Java with a C# frontend to demonstrate interoperability.  Uses Google App Engine to power services
